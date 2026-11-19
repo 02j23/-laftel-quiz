@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>라프텔 명대사 퀴즈</title>
+<title>라프텔 애니메이션 퀴즈</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
 <style>
@@ -23,6 +23,10 @@
   .bar{max-width:520px;margin:0 auto;padding:14px 16px;display:flex;align-items:center;justify-content:space-between}
   .brand{font-weight:900;font-size:18px;letter-spacing:-.02em}
   .brand span{color:var(--brand)}
+  .brand{white-space:nowrap}
+  .chip{white-space:nowrap}
+  .user-chip{max-width:120px;overflow:hidden;text-overflow:ellipsis}
+  @media (max-width:420px){ .brand{font-size:16px} .season-chip{display:none} }
   .chip{font-size:12px;font-weight:700;padding:6px 10px;border-radius:999px}
   .season-chip{color:var(--brand);background:var(--brand-soft)}
   .user-chip{color:var(--text);background:var(--surface-2);display:none}
@@ -217,7 +221,7 @@
 
 <header>
   <div class="bar">
-    <div class="brand">라프텔 <span>명대사 퀴즈</span></div>
+    <div class="brand">라프텔 <span>애니메이션 퀴즈</span></div>
     <div style="display:flex;gap:6px;align-items:center">
       <span class="chip user-chip" id="userChip">닉네임 님</span>
       <span class="chip season-chip">SEASON 1</span>
@@ -710,7 +714,7 @@
   const SHARE_URL = location.href.split("#")[0];
   function dareText(){
     const mine = ORDER.filter(m=>getRec(m)).map(m=>{ const r=getRec(m); return `${MODES[m].name} ${r.score}점(${myRank(m,r)}위)`; });
-    const head = mine.length ? `나 라프텔 명대사 퀴즈에서 ${mine.join(", ")} 찍었다!\n너는 몇 점 나올 것 같아? 10초 안에 맞혀봐!` : `라프텔 명대사 퀴즈 같이 하자!\n명대사, OST, 실루엣 중에 골라서 10초 안에 맞히는 거야!`;
+    const head = mine.length ? `나 라프텔 애니메이션 퀴즈에서 ${mine.join(", ")} 찍었다!\n너는 몇 점 나올 것 같아? 10초 안에 맞혀봐!` : `라프텔 애니메이션 퀴즈 같이 하자!\n명대사, OST, 실루엣 중에 골라서 10초 안에 맞히는 거야!`;
     return head + "\n" + SHARE_URL;
   }
   function renderDare(){ $("dareMsg").textContent = dareText(); $("dareUrl").value = SHARE_URL; }
@@ -721,7 +725,7 @@
   }
   $("dareCopy").onclick=async()=>{ const ok=await copyText(dareText()); if(ok) toast("도전장 복사 완료! 톡방에 붙여넣어줘"); else { $("dareUrl").select(); toast("복사가 막혔어. 링크를 길게 눌러 복사해줘"); } };
   $("dareShare").onclick=async()=>{
-    if(navigator.share){ try{ await navigator.share({title:"라프텔 명대사 퀴즈 도전장", text:dareText().replace("\n"+SHARE_URL,""), url:SHARE_URL}); return; }catch(e){ if(e && e.name==="AbortError") return; } }
+    if(navigator.share){ try{ await navigator.share({title:"라프텔 애니메이션 퀴즈 도전장", text:dareText().replace("\n"+SHARE_URL,""), url:SHARE_URL}); return; }catch(e){ if(e && e.name==="AbortError") return; } }
     const ok=await copyText(dareText()); toast(ok ? "공유 창을 못 열어서 대신 복사했어!" : "링크를 길게 눌러 복사해줘");
   };
 
